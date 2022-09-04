@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
   start.addEventListener("mouseover", resetBordersColor);
   boundaries.forEach((item) => item.addEventListener("mouseover", lostRound));
   end.addEventListener("mouseover", winRound);
+  game.addEventListener("mouseleave", cheatTry);
 
   // Functions
   function resetBordersColor() {
@@ -40,5 +41,11 @@ document.addEventListener("DOMContentLoaded", function () {
         'You lost! Move your mouse over the "S" to play another round.';
       canPlay = false;
     }
+  }
+
+  function cheatTry() {
+    status.innerHTML =
+      "Don't try to take shortcuts! It's not fair. Move your mouse over the \"S\" to start over.";
+    canPlay = false;
   }
 });
