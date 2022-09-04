@@ -6,4 +6,9 @@ document.addEventListener("DOMContentLoaded", function () {
   var status = document.getElementById("status");
   var game = document.getElementById("game");
   var canPlay = true;
+
+  //
+  start.addEventListener("mouseover", resetBordersColor);
+  boundaries.forEach((item) => item.addEventListener("mouseover", lostRound));
+  end.addEventListener("mouseover", winRound);
 });
