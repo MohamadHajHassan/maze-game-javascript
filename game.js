@@ -5,15 +5,38 @@ document.addEventListener("DOMContentLoaded", function () {
   var boundaries = document.querySelectorAll(".boundary");
   var status = document.getElementById("status");
   var game = document.getElementById("game");
-  var canPlay = true;
+  var canPlay = false;
+  var score = 0;
 
   //
+  printScore();
+  printScoreInfo();
   start.addEventListener("mouseover", resetBordersColor);
-  boundaries.forEach((item) => item.addEventListener("mouseover", lostRound));
   end.addEventListener("mouseover", winRound);
+  boundaries.forEach((item) => item.addEventListener("mouseover", lostRound));
   game.addEventListener("mouseleave", cheatTry);
+  start.addEventListener("click", scoreReset);
 
   // Functions
+  function printScore(score) {
+    var scoreText = document.createElement("p");
+    scoreText.id = "score";
+    scoreText.style.fontSize = "32px";
+    text = document.createTextNode("Your score: " + score);
+    scoreText.appendChild(text);
+    game.insertAdjacentElement("beforebegin", scoreText);
+  }
+
+  function printScoreInfo() {
+    var scoreInfo = document.createElement("p");
+    scoreInfo.style.fontSize = "14px";
+    textInfo = document.createTextNode(
+      'Every win +5, Every lose -10, Press on "S" to reset.'
+    );
+    scoreInfo.appendChild(textInfo);
+    game.insertAdjacentElement("beforebegin", scoreInfo);
+  }
+
   function resetBordersColor() {
     boundaries.forEach((item) => {
       item.style.border = "1px solid black";
@@ -31,6 +54,8 @@ document.addEventListener("DOMContentLoaded", function () {
       status.innerHTML =
         'You win! Move your mouse over the "S" to play another round.';
       canPlay = false;
+      score += 5;
+      adjustScore();
     }
   }
 
@@ -40,6 +65,8 @@ document.addEventListener("DOMContentLoaded", function () {
       status.innerHTML =
         'You lost! Move your mouse over the "S" to play another round.';
       canPlay = false;
+      score -= 10;
+      adjustScore();
     }
   }
 
@@ -47,5 +74,15 @@ document.addEventListener("DOMContentLoaded", function () {
     status.innerHTML =
       "Don't try to take shortcuts! It's not fair. Move your mouse over the \"S\" to start over.";
     canPlay = false;
+  }
+
+  function scoreReset() {
+    score = 0;
+    adjustScore();
+  }
+
+  function adjustScore() {
+    let sc = document.getElementById("score");
+    sc.innerHTML = "Your score: " + score;
   }
 });
